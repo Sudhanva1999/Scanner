@@ -6,7 +6,7 @@ import pandas as pd
 import re
 from openai import OpenAI
 
-client = OpenAI(api_key='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')
+client = OpenAI(api_key='xx')
 
 app = Flask(__name__)
 CORS(app)
