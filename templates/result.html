@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt Analysis Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('resultForm');
+            const formData = new FormData(form);
+            fetch('/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                alert('Data submitted successfully');
+            })
+            .catch(error => {
+                alert('Error: ' + error.message);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Receipt Analysis Result</h1>
+    <h2>Extracted Text:</h2>
+    <pre>{{ text }}</pre>
+    <h2>Analysis Table:</h2>
+    <form id="resultForm" method="POST" action="/submit">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Cost</th>
+                    <th>Sudhanva</th>
+                    <th>Kartik R</th>
+                    <th>Karthik</th>
+                    <th>Sarthak A</th>
+                    <th>Sarthak D</th>
+                    <th>Aaditya</th>
+                    <th>Sunny</th>
+                    <th>Include or not</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table_data %}
+                <tr>
+                    <td>{{ row['Item'] }}</td>
+                    <td>{{ row['Cost'] }}</td>
+                    <td><input type="checkbox" name="Sudhanva_{{ loop.index0 }}" value="true"></td>
+                    <td><input type="checkbox" name="Kartik_R_{{ loop.index0 }}" value="true"></td>
+                    <td><input type="checkbox" name="Karthik_{{ loop.index0 }}" value="true"></td>
+                    <td><input type="checkbox" name="Sarthak_A_{{ loop.index0 }}" value="true"></td>
+                    <td><input type="checkbox" name="Sarthak_D_{{ loop.index0 }}" value="true"></td>
+                    <td><input type="checkbox" name="Aaditya_{{ loop.index0 }}" value="true"></td>
+                    <td><input type="checkbox" name="Sunny_{{ loop.index0 }}" value="true"></td>
+                    <td><input type="checkbox" name="Include_{{ loop.index0 }}" value="true"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit">Add to Splitwise</button>
+    </form>
+    <br>
+    <a href="/">Back to Upload</a>
+</body>
+</html>
